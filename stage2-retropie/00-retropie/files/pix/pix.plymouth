@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=pix
+Description=Raspberry Pi Desktop Splash
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/pix
+ScriptFile=/usr/share/plymouth/themes/pix/pix.script

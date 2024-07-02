@@ -1,0 +1,18 @@
+disable_overscan=1
+dtparam=audio=on
+
+[pi4]
+max_framebuffers=2
+
+[all]
+ignore_lcd=1
+dtoverlay=dwc2,dr_mode=host
+dtoverlay=vc4-kms-v3d-pi4,cma-384
+#dtoverlay=clockworkpi-devterm 
+dtoverlay=clockworkpi-uconsole
+dtoverlay=audremap,pins_12_13
+
+dtparam=spi=on
+dtparam=ant2
+
+##Comment out the device not needed in [all]
