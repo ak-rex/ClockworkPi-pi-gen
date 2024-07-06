@@ -32,18 +32,6 @@
 	done
 		echo "Done"
 
-	echo -n "Configuring Wayland Screen Rotation: "
-		echo '[output:DSI-1]' >> "${ROOTFS_DIR}/etc/wayfire/template.ini"
-		echo 'mode = 480x1280@60000' >> "${ROOTFS_DIR}/etc/wayfire/template.ini"
-		echo 'position = 0,0' >> "${ROOTFS_DIR}/etc/wayfire/template.ini"
-		echo 'transform = 270' >> "${ROOTFS_DIR}/etc/wayfire/template.ini"
-		sed -i '1 a repeatable_binding_light_up = KEY_BRIGHTNESSUP' "${ROOTFS_DIR}/etc/wayfire/template.ini"
-		sed -i '2 a command_light_up = brightnessctl s +1' "${ROOTFS_DIR}/etc/wayfire/template.ini"
-		sed -i '3 a repeatable_binding_light_down = KEY_BRIGHTNESSDOWN' "${ROOTFS_DIR}/etc/wayfire/template.ini"
-		sed -i '4 a command_light_down = brightnessctl s 1-' "${ROOTFS_DIR}/etc/wayfire/template.ini"
-		echo "Done"
-
-
 	echo -n "Configuring LightDM Screen Rotation: "
 		sed -i '/^#greeter-setup-script=/c\greeter-setup-script=/etc/lightdm/setup.sh' "${ROOTFS_DIR}/etc/lightdm/lightdm.conf"
 		echo '#!/bin/sh' >"${ROOTFS_DIR}/etc/lightdm/setup.sh"
