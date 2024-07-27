@@ -6,17 +6,12 @@
 
 	echo -n "Configuring system theme: "
 		mkdir -p "${ROOTFS_DIR}/etc/skel/.config"
-		mkdir -p "${ROOTFS_DIR}/etc/skel/.local"
-		mkdir -p "${ROOTFS_DIR}/etc/skel/.local/share"
 		mkdir -p "${ROOTFS_DIR}/var/lib/lightdm/.config/"
 	for d in "${ROOTFS_DIR}/home/"* ; do
-		cp -r files/Image-Home/user/.config/* "${ROOTFS_DIR}/etc/skel/.config/"
-		cp -r files/Image-Home/user/.config/* "${ROOTFS_DIR}/var/lib/lightdm/.config/"
-		cp -r files/Image-Home/user/.config/* "$d/.config/"
-		cp -r files/Image-Home/user/.local/share/* "$d/.local/share/"
-		cp -r files/Image-Home/user/.local/share/* "${ROOTFS_DIR}/etc/skel/.local/share/"
+		cp -r files/user/.config/* "${ROOTFS_DIR}/etc/skel/.config/"
+		cp -r files/user/.config/* "${ROOTFS_DIR}/var/lib/lightdm/.config/"
+		cp -r files/user/.config/* "$d/.config/"
 		chown -R 1000:1000 "$d/.config"
-		chown -R 1000:1000 "$d/.local"
 		chown -R 106:111 "${ROOTFS_DIR}/var/lib/lightdm/"
 	done
 		echo "Done"

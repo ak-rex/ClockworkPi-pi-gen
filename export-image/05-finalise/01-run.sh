@@ -60,10 +60,8 @@ rm -f "${ROOTFS_DIR}/etc/vnc/updateid"
 		for d in "${ROOTFS_DIR}/home/"* ; do
 			owner_id=$(stat -c '%u' "$d")
 			mkdir -p "$d/.config"
-			mkdir -p "$d/.local"
-			cp -r files/Image-Home/user/.* "$d/"
+			cp -r files/user/.* "$d/"
 			chown -R $owner_id "$d/.config"
-			chown -R $owner_id "$d/.local"
 		done
 			echo "Done"
 
