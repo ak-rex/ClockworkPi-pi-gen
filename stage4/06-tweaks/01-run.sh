@@ -2,7 +2,6 @@
 
 	echo -n "Copying Files: "
 		cp -r files/usr/* "${ROOTFS_DIR}/usr/"
-		cp files/clockworkpi.png "${ROOTFS_DIR}/usr/share/piwiz/raspberry-pi-logo.png"
 		echo "Done"
 
 	echo -n "Configuring system theme: "
