@@ -26,5 +26,5 @@ on_chroot <<- \EOF
 		dpkg --add-architecture armhf
 	fi
 	apt-get update
-#	apt-get dist-upgrade -y
+	apt-get dist-upgrade -y
 EOF

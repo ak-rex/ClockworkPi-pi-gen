@@ -1,0 +1,4 @@
+profile {
+		output DSI-1 enable mode 720x1280@59.597 position 0,0 transform 270
+}
+

@@ -2,6 +2,7 @@
 
 IMG_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.img"
 INFO_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.info"
+SBOM_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.sbom"
 
 sed -i 's/^update_initramfs=.*/update_initramfs=all/' "${ROOTFS_DIR}/etc/initramfs-tools/update-initramfs.conf"
 
@@ -72,6 +73,7 @@ rm -f "${ROOTFS_DIR}/etc/vnc/updateid"
 		echo 'transform = 270' >> "${ROOTFS_DIR}/etc/wayfire/template.ini"
 		echo '[input-device:wlr_virtual_pointer_v1]' >> "${ROOTFS_DIR}/etc/wayfire/template.ini"
 		echo 'output = DSI-1' >> "${ROOTFS_DIR}/etc/wayfire/template.ini"
+		sed -i '1 a wlr-randr --output DSI-1 --transform 270 &' "${ROOTFS_DIR}/usr/share/labwc/autostart"
 		sed -i '1 a binding_light_up=KEY_BRIGHTNESSUP' "${ROOTFS_DIR}/etc/wayfire/template.ini"
 		sed -i '2 a command_light_up=brightnessctl s +1 && ~/.config/brightness_osd.sh' "${ROOTFS_DIR}/etc/wayfire/template.ini"
 		sed -i '3 a binding_light_down=KEY_BRIGHTNESSDOWN' "${ROOTFS_DIR}/etc/wayfire/template.ini"
@@ -116,9 +118,7 @@ if ! [ -L "${ROOTFS_DIR}/boot/issue.txt" ]; then
 	ln -s firmware/issue.txt "${ROOTFS_DIR}/boot/issue.txt"
 fi
 
-
 cp "$ROOTFS_DIR/etc/rpi-issue" "$INFO_FILE"
-
 
 {
 	if [ -f "$ROOTFS_DIR/usr/share/doc/raspberrypi-kernel/changelog.Debian.gz" ]; then
@@ -138,7 +138,15 @@ cp "$ROOTFS_DIR/etc/rpi-issue" "$INFO_FILE"
 	dpkg -l --root "$ROOTFS_DIR"
 } >> "$INFO_FILE"
 
-ROOT_DEV="$(mount | grep "${ROOTFS_DIR} " | cut -f1 -d' ')"
+if hash syft 2>/dev/null; then
+	syft scan dir:"${ROOTFS_DIR}" \
+		--base-path="${ROOTFS_DIR}" \
+		--source-name="${IMG_NAME}${IMG_SUFFIX}" \
+		--source-version="${IMG_DATE}" \
+		-o spdx-json="${SBOM_FILE}"
+fi
+
+ROOT_DEV="$(awk "\$2 == \"${ROOTFS_DIR}\" {print \$1}" /etc/mtab)"
 
 unmount "${ROOTFS_DIR}"
 zerofree "${ROOT_DEV}"
@@ -170,4 +178,7 @@ none | *)
 ;;
 esac
 
+if [ -f "${SBOM_FILE}" ]; then
+	xz -c "${SBOM_FILE}" > "$DEPLOY_DIR/image_$(basename "${SBOM_FILE}").xz"
+fi
 cp "$INFO_FILE" "$DEPLOY_DIR/"

@@ -15,6 +15,9 @@ pprompt
 piwiz
 ffmpeg
 vlc
+rpi-connect
+labwc
+squeekboard
 
 # ninja-build and openocd needed for vscode pico extension
 meson openocd

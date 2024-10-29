@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_config xmlns="http://openbox.org/3.4/rc">
+
+  <keyboard>
+    <numlock>off</numlock>
+  </keyboard>
+
+</openbox_config>
