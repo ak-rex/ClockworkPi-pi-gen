@@ -1,4 +1,4 @@
-IMG_NAME="ClockworkPi-CM4"
+IMG_NAME="ClockworkPi-Bookworm"
 RELEASE="bookworm"
 DEPLOY_COMPRESSION="none"
 TARGET_HOSTNAME="clockworkpi"
