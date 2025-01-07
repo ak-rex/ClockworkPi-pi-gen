@@ -3,28 +3,22 @@ ignore_lcd=1
 max_framebuffers=2
 disable_overscan=1
 dtparam=audio=on
-dtoverlay=dwc2,dr_mode=host
 dtoverlay=audremap,pins_12_13
+dtoverlay=dwc2,dr_mode=host
 dtparam=ant2
 
 [pi4]
-dtoverlay=vc4-kms-v3d-pi4,cma-384
-dtparam=spi=on
 dtoverlay=clockworkpi-uconsole
 #dtoverlay=clockworkpi-devterm
+dtoverlay=vc4-kms-v3d-pi4,cma-384
+dtparam=spi=on
 
 [pi5]
-#dtoverlay=vc4-kms-v3d-pi5,cma-384
-#dtoverlay=spi0-0cs
-#dtoverlay=clockworkpi-misc-cm5
-#dtoverlay=clockworkpi-pmu-cm5
-#dtoverlay=clockworkpi-uconsole-cm5
+dtoverlay=clockworkpi-misc-cm5
+dtoverlay=clockworkpi-pmu-cm5
+dtoverlay=clockworkpi-uconsole-cm5
+dtoverlay=vc4-kms-v3d-pi5,cma-384
+dtoverlay=spi0-0cs
 
-
-
-
-
-
-##For CM4 uncomment all overlays except the panel your not using in section [pi4]
-##For CM5 on the uConsole uncomment all overlays in section [pi5]
-##Make sure the CM you are not usings section is commented out.
+##if you have a devterm uncomment devterm and comment out entries with uconsole.
+##make sure the device you are not using is commented out.
