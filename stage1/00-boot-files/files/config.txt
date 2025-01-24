@@ -8,17 +8,16 @@ dtoverlay=dwc2,dr_mode=host
 dtparam=ant2
 
 [pi4]
-dtoverlay=clockworkpi-uconsole
 #dtoverlay=clockworkpi-devterm
+dtoverlay=clockworkpi-uconsole
 dtoverlay=vc4-kms-v3d-pi4,cma-384
 dtparam=spi=on
 
 [pi5]
-dtoverlay=clockworkpi-misc-cm5
-dtoverlay=clockworkpi-pmu-cm5
 dtoverlay=clockworkpi-uconsole-cm5
 dtoverlay=vc4-kms-v3d-pi5,cma-384
 dtoverlay=spi0-0cs
+dtparam=pciex1=off
 
+##only edit the section of the pi you have, other section will be ignored.
 ##if you have a devterm uncomment devterm and comment out entries with uconsole.
-##make sure the device you are not using is commented out.
