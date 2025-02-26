@@ -1,4 +1,4 @@
 #!/bin/sh
 
-rm -rf deploy
-rm -rf work
+sudo rm -rf deploy
+sudo rm -rf work

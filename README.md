@@ -6,6 +6,9 @@ which was in turn derived from the Raspbian project.
 **Note**: Raspberry Pi OS 32 bit images are based primarily on Raspbian, while
 Raspberry Pi OS 64 bit images are based primarily on Debian.
 
+**Note**: 32 bit images should be built from the `master` branch.
+64 bit images should be built from the `arm64` branch.
+
 ## Dependencies
 
 pi-gen runs on Debian-based operating systems released after 2017, and we
@@ -34,7 +37,7 @@ can do so with:
 git clone https://github.com/RPI-Distro/pi-gen.git
 ```
 
-`--depth 1` can be added afer `git clone` to create a shallow clone, only containing
+`--depth 1` can be added after `git clone` to create a shallow clone, only containing
 the latest revision of the repository. Do not do this on your development machine.
 
 Also, be careful to clone the repository to a base path **NOT** containing spaces.
@@ -152,7 +155,7 @@ The following environment variables are supported:
 
  * `TIMEZONE_DEFAULT` (Default: 'Europe/London' )
 
-   Default keyboard layout.
+   Default time zone.
 
    To get the current value from a running system, look in
    `/etc/timezone`.
@@ -205,6 +208,10 @@ The following environment variables are supported:
 
     If set, then instead of working through the numeric stages in order, this list will be followed. For example setting to `"stage0 stage1 mystage stage2"` will run the contents of `mystage` before stage2. Note that quotes are needed around the list. An absolute or relative path can be given for stages outside the pi-gen directory.
 
+ * `EXPORT_CONFIG_DIR` (Default: `$BASE_DIR/export-image`)
+
+    If set, use this directory path as the location of scripts to run when generating images. An absolute or relative path can be given for a location outside the pi-gen directory.
+
 A simple example for building Raspberry Pi OS:
 
 ```bash
@@ -223,12 +230,12 @@ This is parsed after `config` so can be used to override values set there.
 
 The following process is followed to build images:
 
- * Interate through all of the stage directories in alphanumeric order
+ * Iterate through all of the stage directories in alphanumeric order
 
  * Bypass a stage directory if it contains a file called
    "SKIP"
 
- * Run the script ```prerun.sh``` which is generally just used to copy the build
+ * Run the script `prerun.sh` which is generally just used to copy the build
    directory between stages.
 
  * In each stage directory iterate through each subdirectory and then run each of the
@@ -249,7 +256,7 @@ The following process is followed to build images:
        separated, per line.
 
      - **00-packages-nr** - As 00-packages, except these will be installed using
-       the ```--no-install-recommends -y``` parameters to apt-get.
+       the `--no-install-recommends -y` parameters to apt-get.
 
      - **00-patches** - A directory containing patch files to be applied, using quilt.
        If a file named 'EDIT' is present in the directory, the build process will
@@ -392,17 +399,14 @@ follows:
  * Run build.sh to build all stages
  * Add SKIP files to the earlier successfully built stages
  * Modify the last stage
- * Rebuild just the last stage using ```sudo CLEAN=1 ./build.sh``` (or, for docker builds
-   ```PRESERVE_CONTAINER=1 CONTINUE=1 CLEAN=1 ./build-docker.sh```)
+ * Rebuild just the last stage using `sudo CLEAN=1 ./build.sh` (or, for docker builds
+   `PRESERVE_CONTAINER=1 CONTINUE=1 CLEAN=1 ./build-docker.sh`)
  * Once you're happy with the image you can remove the SKIP_IMAGES files and
    export your image to test
 
 # Troubleshooting
 
 ## `64 Bit Systems`
-Please note there is currently an issue when compiling with a 64 Bit OS. See
-https://github.com/RPi-Distro/pi-gen/issues/271
-
 A 64 bit image can be generated from the `arm64` branch in this repository. Just
 replace the command from [this section](#getting-started-with-building-your-images)
 by the one below, and follow the rest of the documentation:
@@ -419,7 +423,7 @@ work from a Raspberry Pi with a 64-bit capable processor (i.e. Raspberry Pi Zero
 
 ## `binfmt_misc`
 
-Linux is able execute binaries from other architectures, meaning that it should be
+Linux is able to execute binaries from other architectures, meaning that it should be
 possible to make use of `pi-gen` on an x86_64 system, even though it will be running
 ARM binaries. This requires support from the [`binfmt_misc`](https://en.wikipedia.org/wiki/Binfmt_misc)
 kernel module.

@@ -4,8 +4,6 @@ IMG_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.img"
 INFO_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.info"
 SBOM_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.sbom"
 
-sed -i 's/^update_initramfs=.*/update_initramfs=all/' "${ROOTFS_DIR}/etc/initramfs-tools/update-initramfs.conf"
-
 on_chroot << EOF
 update-initramfs -k all -c
 if [ -x /etc/init.d/fake-hwclock ]; then
@@ -15,6 +13,11 @@ if hash hardlink 2>/dev/null; then
 	hardlink -t /usr/share/doc
 fi
 EOF
+
+if [ -f "${ROOTFS_DIR}/etc/initramfs-tools/update-initramfs.conf" ]; then
+	sed -i 's/^update_initramfs=.*/update_initramfs=yes/' "${ROOTFS_DIR}/etc/initramfs-tools/update-initramfs.conf"
+	sed -i 's/^MODULES=.*/MODULES=dep/' "${ROOTFS_DIR}/etc/initramfs-tools/initramfs.conf"
+fi
 
 if [ -d "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.config" ]; then
 	chmod 700 "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.config"
@@ -73,8 +76,8 @@ rm -f "${ROOTFS_DIR}/etc/vnc/updateid"
 		echo 'transform = 270' >> "${ROOTFS_DIR}/etc/wayfire/template.ini"
 		echo '[input-device:wlr_virtual_pointer_v1]' >> "${ROOTFS_DIR}/etc/wayfire/template.ini"
 		echo 'output = DSI-1' >> "${ROOTFS_DIR}/etc/wayfire/template.ini"
-		sed -i '1 a wlr-randr --output DSI-1 --transform 270 &' "${ROOTFS_DIR}/usr/share/labwc/autostart"
-		sed -i '2 a wlr-randr --output DSI-2 --transform 270 &' "${ROOTFS_DIR}/usr/share/labwc/autostart"
+		sed -i '1 a wlr-randr --output DSI-1 --transform 270 &' "${ROOTFS_DIR}/etc/xdg/labwc-greeter/autostart"
+		sed -i '2 a wlr-randr --output DSI-2 --transform 270 &' "${ROOTFS_DIR}/etc/xdg/labwc-greeter/autostart"
 		sed -i '1 a binding_light_up=KEY_BRIGHTNESSUP' "${ROOTFS_DIR}/etc/wayfire/template.ini"
 		sed -i '2 a command_light_up=brightnessctl s +1 && ~/.config/brightness_osd.sh' "${ROOTFS_DIR}/etc/wayfire/template.ini"
 		sed -i '3 a binding_light_down=KEY_BRIGHTNESSDOWN' "${ROOTFS_DIR}/etc/wayfire/template.ini"
@@ -112,6 +115,7 @@ rm -f "${ROOTFS_DIR}/etc/vnc/updateid"
 	else
 		echo "Skipped"
 	fi
+
 
 update_issue "$(basename "${EXPORT_DIR}")"
 install -m 644 "${ROOTFS_DIR}/etc/rpi-issue" "${ROOTFS_DIR}/boot/firmware/issue.txt"
