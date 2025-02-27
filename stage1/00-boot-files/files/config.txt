@@ -7,7 +7,6 @@ dtparam=spi=on
 [pi5]
 dtoverlay=clockworkpi-uconsole-cm5
 dtoverlay=vc4-kms-v3d-pi5,cma-384
-dtoverlay=test-rp1-audio-out
 dtparam=pciex1=off
 
 [all]
