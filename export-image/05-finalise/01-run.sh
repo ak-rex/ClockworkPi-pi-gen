@@ -92,7 +92,7 @@ rm -f "${ROOTFS_DIR}/etc/vnc/updateid"
 	fi
 
 	echo -n "Configuring RetroPie Screen Rotation: "
-	if [[ -d "${ROOTFS_DIR}/home/pi/RetroPie-Setup" ]]; then
+	if [[ -d "${ROOTFS_DIR}/home/pi/RetroPie" ]]; then
 		for d in "${ROOTFS_DIR}/home/"* ; do
 			owner_id=$(stat -c '%u' "$d")
 			mkdir -p "${ROOTFS_DIR}/etc/skel/RetroPie"
