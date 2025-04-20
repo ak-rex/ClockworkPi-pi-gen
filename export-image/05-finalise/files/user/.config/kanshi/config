@@ -5,3 +5,11 @@ profile {
 profile {
 		output DSI-2 enable mode 720x1280@59.901 position 0,0 transform 270
 }
+
+profile {
+		output DSI-1 enable mode 480x1280@60.000 position 0,0 transform 270
+}
+
+profile {
+		output DSI-2 enable mode 480x1280@60.000 position 0,0 transform 270
+}
