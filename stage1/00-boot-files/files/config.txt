@@ -21,7 +21,7 @@ enable_uart=1
 dtoverlay=clockworkpi-uconsole-cm5
 dtoverlay=vc4-kms-v3d-pi5,cma-384
 dtparam=pciex1=off
-enable_uart=0
+dtparam=uart0
 
 
 [all]
