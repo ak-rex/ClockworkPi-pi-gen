@@ -59,7 +59,6 @@ find "${ROOTFS_DIR}/var/log/" -type f -exec cp /dev/null {} \;
 rm -f "${ROOTFS_DIR}/root/.vnc/private.key"
 rm -f "${ROOTFS_DIR}/etc/vnc/updateid"
 
-	cp files/rc.local "${ROOTFS_DIR}/etc/rc.local"
 
 	echo -n "Configuring Desktop: "
 	if [[ -d "${ROOTFS_DIR}/etc/wayfire" ]]; then
