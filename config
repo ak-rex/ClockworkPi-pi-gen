@@ -1,5 +1,5 @@
-IMG_NAME="ClockworkPi-Bookworm"
-RELEASE="bookworm"
+IMG_NAME="ClockworkPi-Trixie"
+RELEASE="trixie"
 DEPLOY_COMPRESSION="none"
 TARGET_HOSTNAME="clockworkpi"
 FIRST_USER_NAME="pi"

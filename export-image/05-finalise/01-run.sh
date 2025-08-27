@@ -5,14 +5,17 @@ INFO_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.info"
 SBOM_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.sbom"
 BMAP_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.bmap"
 
-on_chroot << EOF
-update-initramfs -k all -c
-if [ -x /etc/init.d/fake-hwclock ]; then
-	/etc/init.d/fake-hwclock stop
-fi
-if hash hardlink 2>/dev/null; then
-	hardlink -t /usr/share/doc
-fi
+on_chroot <<- EOF
+	update-initramfs -k all -c
+	if hash hardlink 2>/dev/null; then
+		hardlink -t /usr/share/doc
+	fi
+	if [ -f /usr/lib/systemd/system/apt-listchanges.service ]; then
+		python3 -m apt_listchanges.populate_database --profile apt
+		systemctl disable apt-listchanges.timer
+	fi
+	install -m 755 -o systemd-timesync -g systemd-timesync -d /var/lib/systemd/timesync/clock
+	install -m 644 -o systemd-timesync -g systemd-timesync /dev/null /var/lib/systemd/timesync/clock
 EOF
 
 if [ -f "${ROOTFS_DIR}/etc/initramfs-tools/update-initramfs.conf" ]; then
@@ -51,7 +54,7 @@ rm -f "${ROOTFS_DIR}"/usr/share/icons/*/icon-theme.cache
 
 rm -f "${ROOTFS_DIR}/var/lib/dbus/machine-id"
 
-true > "${ROOTFS_DIR}/etc/machine-id"
+echo "uninitialized" > "${ROOTFS_DIR}/etc/machine-id"
 
 ln -nsf /proc/mounts "${ROOTFS_DIR}/etc/mtab"
 
@@ -60,26 +63,26 @@ find "${ROOTFS_DIR}/var/log/" -type f -exec cp /dev/null {} \;
 rm -f "${ROOTFS_DIR}/root/.vnc/private.key"
 rm -f "${ROOTFS_DIR}/etc/vnc/updateid"
 
-
-	echo -n "Configuring Desktop: "
-	if [[ -d "${ROOTFS_DIR}/etc/wayfire" ]]; then
+#	cp -r files/splash.png "${ROOTFS_DIR}/usr/share/plymouth/themes/pix/splash.png"
+	echo -n "Configuring Login Screen: "
+	if [[ -d "${ROOTFS_DIR}/etc/xdg/labwc-greeter" ]]; then
 		for d in "${ROOTFS_DIR}/home/"* ; do
 			owner_id=$(stat -c '%u' "$d")
 			mkdir -p "$d/.config"
 			cp -r files/user/.* "$d/"
 			chown -R $owner_id "$d/.config"
-		done
-			echo "Done"
-
-	echo -n "Configuring Wayland Screen Rotation: "
-		echo '[output:DSI-1]' >> "${ROOTFS_DIR}/etc/wayfire/template.ini"
-		echo 'mode = 480x1280@60000' >> "${ROOTFS_DIR}/etc/wayfire/template.ini"
-		echo 'position = 0,0' >> "${ROOTFS_DIR}/etc/wayfire/template.ini"
-		echo 'transform = 270' >> "${ROOTFS_DIR}/etc/wayfire/template.ini"
-		echo '[input-device:wlr_virtual_pointer_v1]' >> "${ROOTFS_DIR}/etc/wayfire/template.ini"
-		echo 'output = DSI-1' >> "${ROOTFS_DIR}/etc/wayfire/template.ini"
+			mkdir -p "${ROOTFS_DIR}/etc/skel/.config"
+			cp -r files/user/.config/* "${ROOTFS_DIR}/etc/skel/.config/"
 		sed -i '1 a wlr-randr --output DSI-1 --transform 270 &' "${ROOTFS_DIR}/etc/xdg/labwc-greeter/autostart"
 		sed -i '2 a wlr-randr --output DSI-2 --transform 270 &' "${ROOTFS_DIR}/etc/xdg/labwc-greeter/autostart"
+		done
+			echo "Done"
+	else
+			echo "Skipped"
+	fi
+
+	echo -n "Configuring Wayfire: "
+	if [[ -d "${ROOTFS_DIR}/etc/wayfire" ]]; then
 		sed -i '1 a binding_light_up=KEY_BRIGHTNESSUP' "${ROOTFS_DIR}/etc/wayfire/template.ini"
 		sed -i '2 a command_light_up=brightnessctl s +1 && ~/.config/brightness_osd.sh' "${ROOTFS_DIR}/etc/wayfire/template.ini"
 		sed -i '3 a binding_light_down=KEY_BRIGHTNESSDOWN' "${ROOTFS_DIR}/etc/wayfire/template.ini"
@@ -88,7 +91,7 @@ rm -f "${ROOTFS_DIR}/etc/vnc/updateid"
 		sed -i '/^command_volume_up = wfpanelctl volumepulse volu/c\command_volume_up=wfpanelctl volumepulse volu && ~/.config/volume_osd.sh' "${ROOTFS_DIR}/etc/wayfire/template.ini"
 		sed -i '/^repeatable_binding_volume_down = KEY_VOLUMEDOWN/c\binding_volume_down=KEY_VOLUMEDOWN' "${ROOTFS_DIR}/etc/wayfire/template.ini"
 		sed -i '/^command_volume_down = wfpanelctl volumepulse vold/c\command_volume_down=wfpanelctl volumepulse vold && ~/.config/volume_osd.sh' "${ROOTFS_DIR}/etc/wayfire/template.ini"
-		echo "Done"
+			echo "Done"
 	else
 			echo "Skipped"
 	fi
@@ -113,6 +116,7 @@ rm -f "${ROOTFS_DIR}/etc/vnc/updateid"
 	echo -n "Configuring X11 Screen Rotation: "
 	if [[ -d "${ROOTFS_DIR}/etc/X11" ]]; then
 		echo "xrandr --output DSI-1 --transform 270" > "${ROOTFS_DIR}/etc/X11/Xsession.d/100custom_xrandr"
+		echo "xrandr --output DSI-2 --transform 270" >> "${ROOTFS_DIR}/etc/X11/Xsession.d/100custom_xrandr"
 		echo "Done"
 	else
 		echo "Skipped"

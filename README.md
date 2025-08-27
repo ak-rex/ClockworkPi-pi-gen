@@ -21,7 +21,7 @@ To install the required dependencies for `pi-gen` you should run:
 
 ```bash
 apt-get install coreutils quilt parted qemu-user-static debootstrap zerofree zip \
-dosfstools libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc \
+dosfstools e2fsprogs libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc \
 gpg pigz xxd arch-test bmap-tools
 ```
 
@@ -55,7 +55,7 @@ environment variables.
 
 The following environment variables are supported:
 
- * `IMG_NAME` (Default: `raspios-$RELEASE-$ARCH`, for example: `raspios-bookworm-armhf`)
+ * `IMG_NAME` (Default: `raspios-$RELEASE-$ARCH`, for example: `raspios-trixie-armhf`)
 
    The name of the image to build with the current stage directories. Use this
    variable to set the root name of your OS, eg `IMG_NAME=Frobulator`.
@@ -66,7 +66,7 @@ The following environment variables are supported:
    The release name to use in `/etc/issue.txt`. The default should only be used
    for official Raspberry Pi builds.
 
-* `RELEASE` (Default: `bookworm`)
+* `RELEASE` (Default: `trixie`)
 
    The release version to build images against. Valid values are any supported
    Debian release. However, since different releases will have different sets of
