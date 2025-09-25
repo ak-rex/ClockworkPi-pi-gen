@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
 	echo -n "Copying Files: "
-		cp -r files/usr/* "${ROOTFS_DIR}/usr/"
+		cp -rf files/usr/* "${ROOTFS_DIR}/usr/"
 		echo "Done"
 
 	echo -n "Configuring system theme: "

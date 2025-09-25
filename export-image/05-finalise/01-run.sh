@@ -63,7 +63,6 @@ find "${ROOTFS_DIR}/var/log/" -type f -exec cp /dev/null {} \;
 rm -f "${ROOTFS_DIR}/root/.vnc/private.key"
 rm -f "${ROOTFS_DIR}/etc/vnc/updateid"
 
-#	cp -r files/splash.png "${ROOTFS_DIR}/usr/share/plymouth/themes/pix/splash.png"
 	echo -n "Configuring Login Screen: "
 	if [[ -d "${ROOTFS_DIR}/etc/xdg/labwc-greeter" ]]; then
 		for d in "${ROOTFS_DIR}/home/"* ; do
@@ -76,6 +75,15 @@ rm -f "${ROOTFS_DIR}/etc/vnc/updateid"
 		sed -i '1 a wlr-randr --output DSI-1 --transform 270 &' "${ROOTFS_DIR}/etc/xdg/labwc-greeter/autostart"
 		sed -i '2 a wlr-randr --output DSI-2 --transform 270 &' "${ROOTFS_DIR}/etc/xdg/labwc-greeter/autostart"
 		done
+			echo "Done"
+	else
+			echo "Skipped"
+	fi
+
+	echo -n "Configuring Start Menu: "
+	if [[ -d "${ROOTFS_DIR}/etc/xdg/menus/" ]]; then
+		cp -r files/lxde-pi-applications.menu "${ROOTFS_DIR}/etc/xdg/menus/lxde-pi-applications.menu"
+		cp -r files/lxde-pi-applications.menu "${ROOTFS_DIR}/etc/xdg/menus/rpd-applications.menu"
 			echo "Done"
 	else
 			echo "Skipped"
