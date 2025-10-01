@@ -2,24 +2,24 @@
 <openbox_config xmlns="http://openbox.org/3.4/rc">
   <keyboard>
     <keybind key="XF86_AudioLowerVolume">
-      <action name="Execute" command="amixer sset Master 5%-" />
-      <action name="Execute" command="~/.config/volume_osd.sh" />
+      <action name="Execute" command="amixer sset Master 5%-"/>
+      <action name="Execute" command="~/.config/volume_osd.sh"/>
     </keybind>
     <keybind key="XF86_AudioRaiseVolume">
-      <action name="Execute" command="amixer sset Master 5%+" />
-      <action name="Execute" command="~/.config/volume_osd.sh" />
+      <action name="Execute" command="amixer sset Master 5%+"/>
+      <action name="Execute" command="~/.config/volume_osd.sh"/>
     </keybind>
     <keybind key="XF86_AudioMute">
-      <action name="Execute" command="amixer sset Master toggle" />
-      <action name="Execute" command="~/.config/volume_osd.sh" />
+      <action name="Execute" command="amixer sset Master toggle"/>
+      <action name="Execute" command="~/.config/volume_osd.sh"/>
     </keybind>
     <keybind key="XF86_MonBrightnessUp">
-      <action name="Execute" command="brightnessctl set +10%" />
-      <action name="Execute" command="~/.config/brightness_osd.sh" />
+      <action name="Execute" command="brightnessctl set +10%"/>
+      <action name="Execute" command="~/.config/brightness_osd.sh"/>
     </keybind>
     <keybind key="XF86_MonBrightnessDown">
-      <action name="Execute" command="brightnessctl set 10%-" />
-      <action name="Execute" command="~/.config/brightness_osd.sh" />
+      <action name="Execute" command="brightnessctl set 10%-"/>
+      <action name="Execute" command="~/.config/brightness_osd.sh"/>
     </keybind>
   </keyboard>
-</openbox_config>
+<theme><font place="ActiveWindow"><name>PibotoLt</name><size>12</size><weight>Normal</weight><slant>Normal</slant></font><font place="InactiveWindow"><name>PibotoLt</name><size>12</size><weight>Normal</weight><slant>Normal</slant></font><name>PiXonyx</name></theme></openbox_config>
