@@ -23,8 +23,8 @@ else
 fi
 
 install -m 644 files/raspberrypi-archive-keyring.pgp "${ROOTFS_DIR}/usr/share/keyrings/"
-cat files/ak-rex.gpg.key | gpg --dearmor > "${STAGE_WORK_DIR}/ak-rex-main-stable.gpg"
-install -m 644 "${STAGE_WORK_DIR}/ak-rex-main-stable.gpg" "${ROOTFS_DIR}/etc/apt/trusted.gpg.d/"
+cat files/ak-rex.gpg.key | gpg --dearmor > "${STAGE_WORK_DIR}/ak-rex.gpg"
+install -m 644 "${STAGE_WORK_DIR}/ak-rex.gpg" "${ROOTFS_DIR}/etc/apt/trusted.gpg.d/"
 on_chroot <<- \EOF
 	ARCH="$(dpkg --print-architecture)"
 	if [ "$ARCH" = "armhf" ]; then

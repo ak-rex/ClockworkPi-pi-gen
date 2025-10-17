@@ -1,6 +1,22 @@
 <?xml version="1.0"?>
 <openbox_config xmlns="http://openbox.org/3.4/rc">
+   <desktops>
+    <popupTime>1000</popupTime>
+    <names>
+      <name>Desktop 1</name>
+      <name>Desktop 2</name>
+      <name>Desktop 3</name>
+      <name>Desktop 4</name>
+    </names>
+  </desktops>
+
   <keyboard>
+    <keybind key="C-Left">
+      <action name="GoToDesktop" to="left" />
+    </keybind>
+    <keybind key="C-Right">
+      <action name="GoToDesktop" to="right" />
+    </keybind>
     <keybind key="XF86_AudioLowerVolume">
       <action name="Execute" command="amixer sset Master 5%-"/>
       <action name="Execute" command="~/.config/volume_osd.sh"/>
