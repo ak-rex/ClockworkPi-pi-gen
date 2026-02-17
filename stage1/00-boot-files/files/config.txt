@@ -1,5 +1,4 @@
 [pi3]
-#dtoverlay=clockworkpi-devterm-cm3
 dtoverlay=clockworkpi-uconsole-cm3
 dtoverlay=vc4-kms-v3d
 dtparam=spi=on
@@ -14,6 +13,7 @@ dtoverlay=clockworkpi-uconsole
 dtoverlay=vc4-kms-v3d-pi4,cma-384
 dtparam=spi=on
 enable_uart=1
+dtparam=pciex1
 
 
 [pi5]
