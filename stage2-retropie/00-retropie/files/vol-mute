@@ -1,0 +1,9 @@
+#!/bin/bash
+
+ACTIVE_USER=$(who | awk '{print $1}' | head -n1)
+
+if [ -n "$ACTIVE_USER" ]; then
+    sudo -u "$ACTIVE_USER" XDG_RUNTIME_DIR=/run/user/$(id -u "$ACTIVE_USER") \
+    DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u "$ACTIVE_USER")/bus \
+    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+fi

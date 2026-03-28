@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PERCENT=$(amixer sget Master | grep "Left:" | cut -d "[" -f 2 | cut -d "%" -f 1)
-MUTED=$(amixer sget Master | grep -c "off")
+PERCENT=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf "%d%% %s\n", $2*100, $3}')
+MUTED=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -c "MUTED")
 
 if [ $MUTED -gt 0 ]
 then

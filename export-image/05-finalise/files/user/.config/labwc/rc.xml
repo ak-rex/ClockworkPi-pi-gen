@@ -18,15 +18,15 @@
       <action name="GoToDesktop" to="right" />
     </keybind>
     <keybind key="XF86_AudioLowerVolume">
-      <action name="Execute" command="amixer sset Master 5%-"/>
+      <action name="Execute" command="wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"/>
       <action name="Execute" command="~/.config/volume_osd.sh"/>
     </keybind>
     <keybind key="XF86_AudioRaiseVolume">
-      <action name="Execute" command="amixer sset Master 5%+"/>
+      <action name="Execute" command="wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"/>
       <action name="Execute" command="~/.config/volume_osd.sh"/>
     </keybind>
     <keybind key="XF86_AudioMute">
-      <action name="Execute" command="amixer sset Master toggle"/>
+      <action name="Execute" command="wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"/>
       <action name="Execute" command="~/.config/volume_osd.sh"/>
     </keybind>
     <keybind key="XF86_MonBrightnessUp">
