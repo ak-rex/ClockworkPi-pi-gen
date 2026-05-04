@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/local/bin/run-piwiz-once
+Name=Pi Setup Wizard
+X-KDE-Autostart-enabled=true

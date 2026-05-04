@@ -1,0 +1,26 @@
+[
+    {
+        "enabled": true,
+        "id": "DSI-2",
+        "metadata": {
+            "name": "DSI-2"
+        },
+        "mode": {
+            "refresh": 59.90104675292969,
+            "size": {
+                "height": 1280,
+                "width": 720
+            }
+        },
+        "overscan": 0,
+        "pos": {
+            "x": 0,
+            "y": 0
+        },
+        "priority": 1,
+        "rgbrange": 0,
+        "rotation": 8,
+        "scale": 1,
+        "vrrpolicy": 2
+    }
+]

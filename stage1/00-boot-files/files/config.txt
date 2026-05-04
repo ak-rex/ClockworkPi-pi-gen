@@ -23,6 +23,7 @@ dtoverlay=vc4-kms-v3d-pi5,cma-384
 dtparam=uart0
 dtparam=pciex1
 dtparam=pciex1_gen=3
+kernel=kernel8.img
 
 [all]
 ignore_lcd=1

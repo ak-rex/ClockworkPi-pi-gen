@@ -1,0 +1,11 @@
+sddm
+#kde-full
+kde-config-sddm
+plasma-workspace
+plasma-desktop
+kwin-x11
+#kwin-wayland
+xorg
+konsole
+dolphin
+systemsettings

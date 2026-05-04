@@ -1,0 +1,16 @@
+#!/bin/bash
+
+FLAG=/etc/piwiz.done
+
+if [ ! -f "$FLAG" ]; then
+    /usr/bin/piwiz
+
+    # Disable autologin after setup
+    sudo rm /etc/sddm.conf.d/autologin.conf
+
+    # Mark as done
+    sudo touch "$FLAG"
+
+    # Optional reboot
+    reboot
+fi

@@ -1,5 +1,6 @@
 clockworkpi-audio
 uconsole-4g
-devterm-fan-temp-daemon-cm4
-wiringpi
 brightnessctl
+fonts-nanum
+fonts-baekmuk
+fonts-unfonts-core
