@@ -80,15 +80,6 @@
 			echo "Skipped"
 	fi
 
-	echo -n "Configuring Start Menu: "
-	if [[ -d "${ROOTFS_DIR}/etc/xdg/menus/" ]]; then
-			cp -r files/lxde-pi-applications.menu "${ROOTFS_DIR}/etc/xdg/menus/lxde-pi-applications.menu"
-			cp -r files/lxde-pi-applications.menu "${ROOTFS_DIR}/etc/xdg/menus/rpd-applications.menu"
-			echo "Done"
-	else
-			echo "Skipped"
-	fi
-
 	echo -n "Configuring RetroPie Screen Rotation: "
 	if [[ -d "${ROOTFS_DIR}/home/pi/RetroPie" ]]; then
 		for d in "${ROOTFS_DIR}/home/"* ; do
