@@ -1,29 +1,37 @@
 [pi3]
-dtoverlay=clockworkpi-uconsole-cm3
 dtoverlay=vc4-kms-v3d
 dtparam=spi=on
+enable_uart=1
+
+[cm3+]
+dtoverlay=clockworkpi-uconsole-cm3
 dtoverlay=spi-gpio35-39
 gpio=11=op,dh
-enable_uart=1
 
 
 [pi4]
-#dtoverlay=clockworkpi-devterm
-dtoverlay=clockworkpi-uconsole
-dtoverlay=vc4-kms-v3d-pi4,cma-384
+dtoverlay=vc4-kms-v3d-pi4
 dtparam=spi=on
 enable_uart=1
 dtparam=pciex1
 
+[cm4]
+#dtoverlay=clockworkpi-devterm
+dtoverlay=clockworkpi-uconsole-cm4
+
+[cm4s]
+dtoverlay=clockworkpi-uconsole-cm4s
 
 [pi5]
-#dtoverlay=clockworkpi-devterm-cm5
-dtoverlay=clockworkpi-uconsole-cm5
-dtoverlay=vc4-kms-v3d-pi5,cma-384
+dtoverlay=vc4-kms-v3d-pi5
 dtparam=uart0
 dtparam=pciex1
 dtparam=pciex1_gen=3
 kernel=kernel8.img
+
+[cm5]
+#dtoverlay=clockworkpi-devterm-cm5
+dtoverlay=clockworkpi-uconsole-cm5
 
 [all]
 ignore_lcd=1
