@@ -16,11 +16,13 @@ enable_uart=1
 dtparam=pciex1
 
 [cm4]
-#dtoverlay=clockworkpi-devterm
+#dtoverlay=clockworkpi-devterm-cm4
 dtoverlay=clockworkpi-uconsole-cm4
 
 [cm4s]
 dtoverlay=clockworkpi-uconsole-cm4s
+dtoverlay=spi-gpio35-39
+gpio=11=op,dh
 
 [pi5]
 dtoverlay=vc4-kms-v3d-pi5
