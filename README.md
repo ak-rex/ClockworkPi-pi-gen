@@ -60,7 +60,7 @@ environment variables.
 
 The following environment variables are supported:
 
- * `IMG_NAME` (Default: `raspios-$RELEASE-$ARCH`, for example: `raspios-trixie-armhf`)
+ * `IMG_NAME` (Default: `raspios-$RELEASE-$ARCH`, for example: `raspios-trixie-arm64`)
 
    The name of the image to build with the current stage directories. Use this
    variable to set the root name of your OS, eg `IMG_NAME=Frobulator`.
@@ -334,8 +334,8 @@ PRESERVE_CONTAINER=1 ./build-docker.sh
 ```
 
 No qemu is needed on the host. If the host's own `binfmt_misc` registration for
-armhf does not work inside the container, the container registers the image's
-`qemu-arm` for the duration of the build.
+arm64 does not work inside the container, the container registers the image's
+`qemu-aarch64` for the duration of the build.
 
 ### Passing arguments to Docker
 
@@ -454,7 +454,7 @@ kernel module.
 You may see one of the following errors:
 
 ```
-armhf: not supported on this machine/kernel
+arm64: not supported on this machine/kernel
 ```
 ```
 W: Failure trying to run: chroot "/pi-gen/work/test/stage0/rootfs" /bin/true
@@ -464,6 +464,6 @@ chroot: failed to run command '/bin/true': Exec format error
 
 To resolve this, ensure that the module is available and loaded (`modprobe binfmt_misc`).
 For builds outside Docker, `qemu-user-binfmt` must also be installed and its interpreters
-registered (`ls /proc/sys/fs/binfmt_misc` should list `qemu-arm`); on distributions whose
+registered (`ls /proc/sys/fs/binfmt_misc` should list `qemu-aarch64`); on distributions whose
 `qemu-user` binaries are still dynamically linked, install `qemu-user-static` instead.
 Docker builds need nothing else on the host.
